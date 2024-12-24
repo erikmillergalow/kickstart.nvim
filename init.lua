@@ -18,7 +18,7 @@ vim.opt.termguicolors = true
 -- leader mappings begin
 
 -- searching (mini.pick)
-vim.keymap.set('n', '<leader>fw', '<cmd>Pick grep_live<cr>', { desc = 'Find words' })
+vim.keymap.set('n', '<leader>fw', '<cmd>Pick grep_live<cr>', { desc = 'Find words (rg)' })
 -- vim.keymap.set('n', '<leader>fg', '<cmd>Pick grep<cr>', { desc = 'Grep' })
 vim.keymap.set('n', '<leader>ff', '<cmd>Pick files<cr>', { desc = 'Find files' })
 vim.keymap.set('n', '<leader>fR', '<cmd>Pick resume<cr>', { desc = 'Resume last search' })
@@ -982,6 +982,12 @@ require('lazy').setup({
       require('mini.sessions').setup()
       -- require('mini.tabline').setup()
       require('mini.pick').setup({
+
+        -- exclude directories with a .ripgreprc file (need to set RIPGREP_CONFIG_PATH)
+        -- https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
+        --
+        -- rg also follows .gitignore in project dir
+
         source = {
           preview = function(buf_id, item, opts)
             require('mini.pick').default_preview(buf_id, item, {
@@ -994,6 +1000,9 @@ require('lazy').setup({
           move_down  = '<C-j>',
           move_start = '<C-g>',
           move_up    = '<C-k>',
+
+          scroll_down = '<C-n>',
+          scroll_up = '<C-p>',
         },
 
         window = {
